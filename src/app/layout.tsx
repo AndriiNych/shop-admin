@@ -49,7 +49,7 @@ export default function RootLayout({
                       syncWithLocation: true,
                       warnWhenUnsavedChanges: true,
                       useNewQueryKeys: true,
-                      projectId: "oAH3Ll-Iph9fQ-Yue9XS",
+                      projectId: "zZGraj-1AvgGx-I0Sw12",
                     }}
                   >
                     {children}
