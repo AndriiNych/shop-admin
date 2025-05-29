@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 
 export const authProviderServer: Pick<AuthProvider, "check"> = {
   check: async () => {
+    console.log("server:check");
     const cookieStore = cookies();
     const auth = cookieStore.get("auth");
 

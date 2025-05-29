@@ -3,13 +3,14 @@ import { authProviderServer } from "@providers/auth-provider/auth-provider.serve
 import { redirect } from "next/navigation";
 
 export default async function Login() {
+  console.log("Form:Login");
   const data = await getData();
 
   if (data.authenticated) {
     redirect(data?.redirectTo || "/");
   }
 
-  return <AuthPage type="login" />;
+  return <AuthPage type="login" title={false} />;
 }
 
 async function getData() {

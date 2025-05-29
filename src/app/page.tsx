@@ -2,12 +2,14 @@
 
 import { Suspense } from "react";
 
-import { WelcomePage } from "@refinedev/core";
+import { Authenticated, WelcomePage } from "@refinedev/core";
 
 export default function IndexPage() {
   return (
     <Suspense>
-      <WelcomePage />
+      <Authenticated key="home-page">
+        {/* <NavigateToResource /> */}
+      </Authenticated>
     </Suspense>
   );
 }

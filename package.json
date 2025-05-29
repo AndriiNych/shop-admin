@@ -7,10 +7,9 @@
   },
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=--max_old_space_size=4096 refine dev",
-    "build": "refine build",
-    "start": "refine start",
-    "lint": "next lint",
-    "refine": "refine"
+    "build": "next build",
+    "start": "next start -p 5000",
+    "lint": "next lint"
   },
   "dependencies": {
     "@refinedev/cli": "^2.16.21",

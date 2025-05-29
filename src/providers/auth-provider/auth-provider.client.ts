@@ -3,26 +3,35 @@
 import type { AuthProvider } from "@refinedev/core";
 import Cookies from "js-cookie";
 
-const mockUsers = [
-  {
-    name: "John Doe",
-    email: "johndoe@mail.com",
-    roles: ["admin"],
-    avatar: "https://i.pravatar.cc/150?img=1",
-  },
-  {
-    name: "Jane Doe",
-    email: "janedoe@mail.com",
-    roles: ["editor"],
-    avatar: "https://i.pravatar.cc/150?img=1",
-  },
-];
+// const mockUsers = [
+//   {
+//     name: "John Doe",
+//     email: "johndoe@mail.com",
+//     roles: ["admin"],
+//     avatar: "https://i.pravatar.cc/150?img=1",
+//   },
+//   {
+//     name: "Jane Doe",
+//     email: "janedoe@mail.com",
+//     roles: ["editor"],
+//     avatar: "https://i.pravatar.cc/150?img=1",
+//   },
+// ];
 
 export const authProviderClient: AuthProvider = {
   login: async ({ email, username, password, remember }) => {
+    console.log("login");
+    console.log({ email, password });
     // Suppose we actually send a request to the back end here.
-    const user = mockUsers[0];
+    const res = await fetch("http://localhost:5000/login", {
+      method: "POST",
+      body: JSON.stringify({ email, password }),
+      headers: { "Content-Type": "application/json" },
+    });
 
+    const user = await res.json();
+
+    console.log(user);
     if (user) {
       Cookies.set("auth", JSON.stringify(user), {
         expires: 30, // 30 days
@@ -43,6 +52,7 @@ export const authProviderClient: AuthProvider = {
     };
   },
   logout: async () => {
+    console.log("logout");
     Cookies.remove("auth", { path: "/" });
     return {
       success: true,
@@ -50,13 +60,15 @@ export const authProviderClient: AuthProvider = {
     };
   },
   check: async () => {
+    console.log("check");
     const auth = Cookies.get("auth");
     if (auth) {
+      console.log("true");
       return {
         authenticated: true,
       };
     }
-
+    console.log("false");
     return {
       authenticated: false,
       logout: true,
@@ -64,6 +76,7 @@ export const authProviderClient: AuthProvider = {
     };
   },
   getPermissions: async () => {
+    console.log("getpermission");
     const auth = Cookies.get("auth");
     if (auth) {
       const parsedUser = JSON.parse(auth);
@@ -72,6 +85,7 @@ export const authProviderClient: AuthProvider = {
     return null;
   },
   getIdentity: async () => {
+    console.log("getIdentity");
     const auth = Cookies.get("auth");
     if (auth) {
       const parsedUser = JSON.parse(auth);
@@ -80,6 +94,7 @@ export const authProviderClient: AuthProvider = {
     return null;
   },
   onError: async (error) => {
+    console.log("onError");
     if (error.response?.status === 401) {
       return {
         logout: true,
